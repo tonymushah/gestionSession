@@ -121,3 +121,4 @@ class CustomSessionHandler implements SessionHandlerInterface
 }
 
 $customSessionHandler = new CustomSessionHandler();
+session_set_save_handler($customSessionHandler);

@@ -1,3 +1,11 @@
+<?php
+    require_once("./Handler.php");
+    session_start();
+    $count = 0;
+    if(isset($_SESSION["count"])) {
+        $count = $_SESSION["count"];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +14,24 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="traitement.php" method="post">
-        <input type="text" name="username" id="">
-        <input type="text" name="password" id="">
-        <input type="submit" value="Valider">
+    <form method="get" action="./sessionCounter.php">
+        <button type="submit">
+            Counted <?php
+                echo $count
+            ?>
+            <?php
+                if($count <= 1){
+                    echo "time";
+                }else{
+                    echo "times";
+                }
+            ?>
+        </button>
     </form>
-    <a href="./inscription.php"> ici</a>
+    <form method="get" action="./resetSession.php">
+        <button type="submit">
+            Reset
+        </button>
+    </form>
 </body>
 </html>
