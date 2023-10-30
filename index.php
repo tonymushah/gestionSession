@@ -1,9 +1,11 @@
 <?php
-    require_once("./Handler.php");
+    include("./Handler.php");
     session_start();
     $count = 0;
     if(isset($_SESSION["count"])) {
         $count = $_SESSION["count"];
+    }else{
+        $_SESSION["count"] = $count;
     }
 ?>
 <!DOCTYPE html>

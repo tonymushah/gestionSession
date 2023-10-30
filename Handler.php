@@ -11,7 +11,7 @@ class CustomSessionHandler implements SessionHandlerInterface
         $servername = "localhost";
         $username = "test_session";
         $password = "etu001844";
-        $database = "sessions";
+        $database = "test_session";
 
         $connection = new mysqli($servername, $username, $password, $database);
 
@@ -34,18 +34,25 @@ class CustomSessionHandler implements SessionHandlerInterface
     public function read($sessionId): string | bool
     {
         $query = "SELECT sessionData FROM sessions where sessionID='%s' and expired=false";
-        $query = sprintf($query);
+        $query = sprintf($query, $sessionId);
         $result = $this->connection->query($query);
         $data = $result->fetch_object();
+        if(is_null($data)) {
+            return "";
+        }
         if (is_object($data)) {
-            return $data->sessiondata;
+            if(!is_null($data->sessionData)){
+                return $data->sessionData;
+            }else{
+                return false;
+            }
         } else {
             return false;
         }
     }
     function exists($sessionId): bool
     {
-        $query = "select sessionId from sessions where sessionId='%s'";
+        $query = "select sessionId from sessions where sessionId='%s' and expired=false";
         $query = sprintf($query, $sessionId);
         $result = $this->connection->execute_query($query);
         $data = $result->fetch_assoc();
